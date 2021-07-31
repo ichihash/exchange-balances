@@ -67,7 +67,7 @@ $("tbody").empty();
    
            
 
-        if(free!=0){ 
+        if(usdValue>0.01){ 
        if(curr=='USDT')
            {
              var symbbalance =  "<tr ><td><span class='ssym'>"+curr+"</span></td><td><span class='sprice'>"+total+"</span></td><td><span class='stotal'>"+total+"</span></td><td><span class='susdv'>"+total+"</span></td></tr>";
