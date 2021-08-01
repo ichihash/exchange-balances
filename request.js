@@ -4,25 +4,12 @@ var endPoint = '/api/v3/account';
 var dataQueryString = 'recvWindow=20000&timestamp=' + Date.now();
 
 var keys = {
-    'akey': '',
-'skey' : ''
+    'akey': 'YyIXjFRf9zF5yVrB0In61eTFAYpvQL3CTfMlnv0h3k5fkwjtCd0LMUm2cZjHTObX',
+'skey' : '0PtxcYsfsljeuJfbOsrbmLS2v4uNoWGWLTVGcBymThiHD3esfcr8r3a3StIYoUT0'
 }
-var balanceEl =document.getElementById("price-el");
 
 
-$(document).ready(function(){
-
-    updateTable();
-  
-    function updateTable(){//proxy function for updates
-       getValues();
-        getassets();
-       
-       setTimeout(updateTable,2*1000);//2 secs
-
-    };
-
-function getValues(){
+function getPrices(){
     var request2 = new XMLHttpRequest();
     request2.open('GET','https://api.binance.com/api/v3/ticker/price', true);
     request2.onload =function(){
@@ -35,11 +22,12 @@ function getValues(){
           usdPrices_l[rData2[k]["symbol"]] = rData2[k]["price"];}
        }
        usdPrices = usdPrices_l;
-      console.log(usdPrices);
+      //console.log(usdPrices);//find value and change
     }
        request2.send();
  ///
 };
+
 function getassets(){
 
  var signature = CryptoJS.HmacSHA256(dataQueryString ,keys['skey']).toString(CryptoJS.enc.Hex);
@@ -51,40 +39,74 @@ function getassets(){
 request1.onload = function(){ 
     rData2 = JSON.parse(request1.responseText);
 
-$("tbody").empty();   
 
-    for(i=0;i<rData2["balances"].length;i++){
+var array = rData2["balances"].length;
+    for(i=0;i<array;i++){
         var curr = rData2["balances"][i]["asset"];
         var free = parseFloat(rData2["balances"][i]["free"]);
         var locked = parseFloat(rData2["balances"][i]["locked"]);
         var total = (free+locked).toFixed(2);
+ 
         var price = usdPrices[curr+'USDT'];
-       price = parseFloat(price).toFixed(2);
+        price = parseFloat(price).toFixed(2);
 
         var usdValue =total*price;
       
-         usdValue = usdValue.toFixed(2);
-   
-           
+        usdValue = usdValue.toFixed(2);
 
         if(usdValue>0.01){ 
-       if(curr=='USDT')
+         if(curr=='USDT')
            {
-             var symbbalance =  "<tr ><td><span class='ssym'>"+curr+"</span></td><td><span class='sprice'>"+total+"</span></td><td><span class='stotal'>"+total+"</span></td><td><span class='susdv'>"+total+"</span></td></tr>";
-          }else{
-             var symbbalance =  "<tr ><td><span class='ssym'>"+curr+"</span></td><td><span class='sprice'>"+price+"</span></td><td><span class='stotal'>"+free+"</span></td><td><span class='susdv'>"+usdValue+"</span></td></tr>";
+             var symbbalance =  "<tr ><td><span class='ssym'>"+curr+"</span></td><td><span class='sprice'>"+"$"+total+"</span></td><td><span class='stotal'>"+total+"</span></td><td><span class='susdv'>"+"$"+total+"</span></td></tr>";
+           
+            }else{
+             var symbbalance =  "<tr ><td><span class='ssym'>"+curr+"</span></td><td><span class='sprice'>"+"$"+price+"</span></td><td><span class='stotal'>"+total+"</span></td><td><span class='susdv'>"+"$"+usdValue+"</span></td></tr>";
             }
-
                 $("#dptable tbody").append(symbbalance);   
+          
              }
       
-   }
-    
-        console.log(rData2["balances"].length);   
-
+            }
+     
    }
 request1.send();
 
 };
+
+getPrices();
+getassets();
+
+$(document).ready(function(){
+
+    updateTable();
+  
+    function updateTable(){//proxy function for updates
+       getPrices();
+       updateValues();
+    setTimeout(updateTable,1*1000);//2 secs
+
+    };
+
+
+
+function updateValues(){
+    //   var symbbalance =  "<tr ><td><span class='ssym'>"+curr+"</span></td><td><span class='sprice'>"+total+"</span></td><td><span class='stotal'>"+total+"</span></td><td><span class='susdv'>"+total+"</span></td></tr>";
+ 
+    $('#dptable > tbody >tr').each(function(){
+        var curr = $(this).find('.ssym').text();
+        var balance = $(this).find('.stotal').text();//text?
+        balnce = parseFloat(balance);
+
+        if(curr!='USDT'){
+             var price = parseFloat(usdPrices[curr+'USDT']).toFixed(2);
+           var usdValue =(balance*price).toFixed(2);
+         
+            $(this).find('.sprice').text("$"+price.toString());  
+            $(this).find('.susdv').text("$"+usdValue.toString());
+   
+        }
+    });
+  
+}
 
 });
