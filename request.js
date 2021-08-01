@@ -4,8 +4,8 @@ var endPoint = '/api/v3/account';
 var dataQueryString = 'recvWindow=20000&timestamp=' + Date.now();
 
 var keys = {
-    'akey':'hY1SnTdW5Me8U38WcUhV25S4GWsorzvTQzpBiCc0r6kdV5JUZPPLiTH2ixMhdXsx', //'i9FS68eIEUbPf5dA29Vgms2SjoHhgZDZ2hLrutL0q5980Xx8e992XEJL5BrS9bem',
-    'skey' :'cuFHSP0DgzQMcCiK2vDMX93Pd9PDxlzQeCFxWxOK7M6aut1gMR6249cH1TVkgrf9' //'fgcPPMq8XTbaqjgwjw1yPCh2b6KGiflwVoYFDv6Kx9WkEG2D16qeuQYSj1VyK9DC'
+    'akey':'';
+    'skey' :''
     
 }
 
