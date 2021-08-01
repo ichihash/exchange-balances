@@ -4,8 +4,9 @@ var endPoint = '/api/v3/account';
 var dataQueryString = 'recvWindow=20000&timestamp=' + Date.now();
 
 var keys = {
-    'akey': '',
-'skey' : ''
+    'akey':'hY1SnTdW5Me8U38WcUhV25S4GWsorzvTQzpBiCc0r6kdV5JUZPPLiTH2ixMhdXsx', //'i9FS68eIEUbPf5dA29Vgms2SjoHhgZDZ2hLrutL0q5980Xx8e992XEJL5BrS9bem',
+    'skey' :'cuFHSP0DgzQMcCiK2vDMX93Pd9PDxlzQeCFxWxOK7M6aut1gMR6249cH1TVkgrf9' //'fgcPPMq8XTbaqjgwjw1yPCh2b6KGiflwVoYFDv6Kx9WkEG2D16qeuQYSj1VyK9DC'
+    
 }
 
 
@@ -45,7 +46,7 @@ var array = rData2["balances"].length;
         var curr = rData2["balances"][i]["asset"];
         var free = parseFloat(rData2["balances"][i]["free"]);
         var locked = parseFloat(rData2["balances"][i]["locked"]);
-        var total = (free+locked).toFixed(2);
+        var total = (free+locked).toFixed(6);
  
         var price = usdPrices[curr+'USDT'];
         price = parseFloat(price).toFixed(2);
@@ -95,7 +96,7 @@ function updateValues(){
     $('#dptable > tbody >tr').each(function(){
         var curr = $(this).find('.ssym').text();
         var balance = $(this).find('.stotal').text();//text?
-        balnce = parseFloat(balance);
+       
 
         if(curr!='USDT'){
              var price = parseFloat(usdPrices[curr+'USDT']).toFixed(2);
