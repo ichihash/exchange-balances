@@ -4,8 +4,8 @@ var endPoint = '/api/v3/account';
 var dataQueryString = 'recvWindow=20000&timestamp=' + Date.now();
 
 var keys = {
-    'akey': 'YyIXjFRf9zF5yVrB0In61eTFAYpvQL3CTfMlnv0h3k5fkwjtCd0LMUm2cZjHTObX',
-'skey' : '0PtxcYsfsljeuJfbOsrbmLS2v4uNoWGWLTVGcBymThiHD3esfcr8r3a3StIYoUT0'
+    'akey': '',
+'skey' : ''
 }
 
 
