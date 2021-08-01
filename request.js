@@ -4,7 +4,7 @@ var endPoint = '/api/v3/account';
 var dataQueryString = 'recvWindow=20000&timestamp=' + Date.now();
 
 var keys = {
-    'akey':'';
+    'akey':'',
     'skey' :''
     
 }
